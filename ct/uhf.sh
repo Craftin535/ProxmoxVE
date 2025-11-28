@@ -43,13 +43,7 @@ function update_script() {
     msg_info "Starting Service"
     systemctl start uhf-server
     msg_ok "Started Service"
-
-    msg_info "Cleaning up"
-    $STD apt -y autoremove
-    $STD apt -y autoclean
-    $STD apt -y clean
-    msg_ok "Cleaned"
-    msg_ok "Updated Successfully"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

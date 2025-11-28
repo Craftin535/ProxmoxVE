@@ -31,16 +31,12 @@ function update_script() {
   fi
 
   if check_for_gh_release "authelia" "authelia/authelia"; then
-    $STD apt-get update
-    $STD apt-get -y upgrade
+    $STD apt update
+    $STD apt -y upgrade
 
     fetch_and_deploy_gh_release "authelia" "authelia/authelia" "binary"
 
-    msg_info "Cleaning Up"
-    $STD apt-get -y autoremove
-    $STD apt-get -y autoclean
-    msg_ok "Cleanup Completed"
-    msg_ok "Updated Successfully"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

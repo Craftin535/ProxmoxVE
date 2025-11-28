@@ -26,7 +26,7 @@ function update_script() {
 
   if [[ ! -f /etc/odoo/odoo.conf ]]; then
     msg_error "No ${APP} Installation Found!"
-    exit 1
+    exit
   fi
   if ! [[ $(dpkg -s python3-lxml-html-clean 2>/dev/null) ]]; then
     $STD apt install python3-lxml
@@ -50,18 +50,14 @@ function update_script() {
     msg_info "Updating ${APP} to ${LATEST_VERSION}"
     curl -fsSL https://nightly.odoo.com/${RELEASE}/nightly/deb/odoo_${RELEASE}.latest_all.deb -o /opt/odoo.deb
     $STD apt install -y /opt/odoo.deb
+    rm -f /opt/odoo.deb
     echo "$LATEST_VERSION" >/opt/${APP}_version.txt
     msg_ok "Updated ${APP} to ${LATEST_VERSION}"
 
-    msg_info "Starting ${APP} service"
+    msg_info "Starting Service"
     systemctl start odoo
     msg_ok "Started Service"
-
-    msg_info "Cleaning Up"
-    rm -f /opt/odoo.deb
-    msg_ok "Cleaned"
-
-    msg_ok "Updated Successfully"
+    msg_ok "Updated successfully!"
   else
     msg_ok "No update required. ${APP} is already at ${LATEST_VERSION}"
   fi

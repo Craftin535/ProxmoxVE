@@ -39,10 +39,10 @@ function update_script() {
     mkdir -p /opt/privatebin/data
     mv /tmp/privatebin_conf.bak /opt/privatebin/cfg/conf.php
     chown -R www-data:www-data /opt/privatebin
-    chmod -R 0755 /opt/privatebin/data}
+    chmod -R 0755 /opt/privatebin/data
     systemctl reload nginx php8.2-fpm
     msg_ok "Configured ${APP}"
-    msg_ok "Successfully updated"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

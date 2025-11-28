@@ -57,17 +57,13 @@ function update_script() {
     else
       cp target/release/vaultwarden /opt/vaultwarden/bin/
     fi
-    msg_ok "Updated VaultWarden"
-
-    msg_info "Cleaning up"
     cd ~ && rm -rf vaultwarden
-    msg_ok "Cleaned"
+    msg_ok "Updated VaultWarden"
 
     msg_info "Starting Service"
     systemctl start vaultwarden
     msg_ok "Started Service"
-
-    msg_ok "$VAULT Update Successful"
+    msg_ok "Updated successfully!"
     exit
   fi
   if [ "$UPD" == "2" ]; then
@@ -78,16 +74,13 @@ function update_script() {
     msg_info "Updating Web-Vault to $WVRELEASE"
     $STD curl -fsSLO https://github.com/dani-garcia/bw_web_builds/releases/download/"$WVRELEASE"/bw_web_"$WVRELEASE".tar.gz
     $STD tar -zxf bw_web_"$WVRELEASE".tar.gz -C /opt/vaultwarden/
-    msg_ok "Updated Web-Vault"
-
-    msg_info "Cleaning up"
     rm bw_web_"$WVRELEASE".tar.gz
-    msg_ok "Cleaned"
+    msg_ok "Updated Web-Vault"
 
     msg_info "Starting Service"
     systemctl start vaultwarden
     msg_ok "Started Service"
-    msg_ok "$WVRELEASE Update Successful"
+    msg_ok "Updated successfully!"
     exit
   fi
   if [ "$UPD" == "3" ]; then

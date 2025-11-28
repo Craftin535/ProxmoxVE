@@ -73,17 +73,14 @@ EOF
     cp -f wastebin* /opt/wastebin/
     chmod +x /opt/wastebin/wastebin
     chmod +x /opt/wastebin/wastebin-ctl
+    rm -f "$temp_file"
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated Wastebin"
 
     msg_info "Starting Wastebin"
     systemctl start wastebin
     msg_ok "Started Wastebin"
-
-    msg_info "Cleaning Up"
-    rm -f "$temp_file"
-    msg_ok "Cleanup Completed"
-    msg_ok "Updated Successfully"
+    msg_ok "Updated successfully!"
   else
     msg_ok "No update required. ${APP} is already at v${RELEASE}"
   fi

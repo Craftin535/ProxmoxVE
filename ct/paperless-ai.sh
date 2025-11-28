@@ -32,9 +32,9 @@ function update_script() {
   fi
   RELEASE=$(curl -fsSL https://api.github.com/repos/clusterzx/paperless-ai/releases/latest | grep "tag_name" | awk '{print substr($2, 3, length($2)-4) }')
   if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
-    msg_info "Stopping $APP"
+    msg_info "Stopping Service"
     systemctl stop paperless-ai
-    msg_ok "Stopped $APP"
+    msg_info "Stopped Service"
 
     msg_info "Updating $APP to v${RELEASE}"
     cd /opt
@@ -65,18 +65,15 @@ EOF
     $STD pip install --no-cache-dir -r requirements.txt
     mkdir -p data/chromadb
     $STD npm install
+    rm -rf /opt/v${RELEASE}.zip
+    rm -rf /opt/paperless-ai_bak
     echo "${RELEASE}" >/opt/${APP}_version.txt
     msg_ok "Updated $APP to v${RELEASE}"
 
-    msg_info "Starting $APP"
+    msg_info "Starting Service"
     systemctl start paperless-ai
-    msg_ok "Started $APP"
-
-    msg_info "Cleaning Up"
-    rm -rf /opt/v${RELEASE}.zip
-    rm -rf /opt/paperless-ai_bak
-    msg_ok "Cleanup Completed"
-    msg_ok "Update Successful"
+    msg_ok "Started Service"
+    msg_ok "Updated successfully!"
   else
     msg_ok "No update required. ${APP} is already at v${RELEASE}"
   fi

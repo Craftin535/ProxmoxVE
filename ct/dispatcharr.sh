@@ -7,7 +7,7 @@ source <(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxV
 
 APP="Dispatcharr"
 var_tags="${var_tags:-media;arr}"
-var_cpu="${var_cpu:-1}"
+var_cpu="${var_cpu:-2}"
 var_ram="${var_ram:-2048}"
 var_disk="${var_disk:-8}"
 var_os="${var_os:-debian}"
@@ -109,6 +109,7 @@ function update_script() {
     fi
     $STD uv run python manage.py migrate --noinput
     $STD uv run python manage.py collectstatic --noinput
+    rm -f /tmp/dispatcharr_db_*.sql
     msg_ok "Migrations Complete"
 
     msg_info "Starting Services"
@@ -117,11 +118,7 @@ function update_script() {
     systemctl start dispatcharr-celerybeat
     systemctl start dispatcharr-daphne
     msg_ok "Started Services"
-
-    msg_info "Cleaning up"
-    rm -f /tmp/dispatcharr_db_*.sql
-    msg_ok "Cleanup completed"
-    msg_ok "Update Successfully!"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

@@ -77,7 +77,8 @@ msg_info "Configure Nginx"
 rm -rf /usr/share/nginx/html
 ln -s /opt/booklore/booklore-ui/dist/booklore/browser /usr/share/nginx/html
 cp /opt/booklore/nginx.conf /etc/nginx/nginx.conf
-sed -i "s/listen \${BOOKLORE_PORT};/listen 6060;/" /etc/nginx/nginx.conf
+sed -i 's/listen \${BOOKLORE_PORT};/listen 6060;/' /etc/nginx/nginx.conf
+sed -i 's/listen \[::\]:${BOOKLORE_PORT};/listen [::]:6060;/' /etc/nginx/nginx.conf
 systemctl restart nginx
 msg_ok "Configured Nginx"
 
@@ -105,8 +106,4 @@ msg_ok "Created BookLore Service"
 
 motd_ssh
 customize
-
-msg_info "Cleaning up"
-$STD apt-get -y autoremove
-$STD apt-get -y autoclean
-msg_ok "Cleaned"
+cleanup_lxc

@@ -36,7 +36,7 @@ function update_script() {
       DB_RESTORE_PATH="/opt/trilium/assets/db"
     else
       msg_error "Database not found in either /opt/trilium/db or /opt/trilium/assets/db"
-      exit 1
+      exit
     fi
 
     msg_info "Stopping Service"
@@ -55,20 +55,14 @@ function update_script() {
     msg_info "Restoring Database"
     mkdir -p "$(dirname "${DB_RESTORE_PATH}")"
     cp -r /opt/trilium_backup/$(basename "${DB_PATH}") "${DB_RESTORE_PATH}"
-    msg_ok "Restored Database"
-
-    msg_info "Cleaning up"
     rm -rf /opt/trilium_backup
-    $STD apt -y autoremove
-    $STD apt -y autoclean
-    $STD apt -y clean
-    msg_ok "Cleaned"
+    msg_ok "Restored Database"
 
     msg_info "Starting Service"
     systemctl start trilium
     sleep 1
     msg_ok "Started Service"
-    msg_ok "Updated Successfully"
+    msg_ok "Updated successfully!"
   fi
   exit
 }

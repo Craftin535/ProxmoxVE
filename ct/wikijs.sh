@@ -54,16 +54,13 @@ function update_script() {
     msg_info "Restoring Data"
     cp -R /opt/wikijs-backup/* /opt/wikijs
     $SQLITE_INSTALL && $STD npm rebuild sqlite3
+    rm -rf /opt/wikijs-backup
     msg_ok "Restored Data"
 
     msg_info "Starting Service"
     systemctl start wikijs
     msg_ok "Started Service"
-
-    msg_info "Cleaning Up"
-    rm -rf /opt/wikijs-backup
-    msg_ok "Cleanup Completed"
-    msg_ok "Updated Successfully!"
+    msg_ok "Updated successfully!"
   fi
   exit
 }
