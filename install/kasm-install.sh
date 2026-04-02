@@ -51,7 +51,7 @@ curl -fsSL -o "/opt/kasm_release_${KASM_VERSION}.tar.gz" "$KASM_URL"
 cd /opt
 tar -xf "kasm_release_${KASM_VERSION}.tar.gz"
 chmod +x /opt/kasm_release/install.sh
-printf 'y\ny\ny\n4\n' | bash /opt/kasm_release/install.sh >~/kasm-install.output 2>&1
+printf 'y\nn\n' | bash /opt/kasm_release/install.sh >~/kasm-install.output 2>&1
 awk '
   /^Kasm UI Login Credentials$/ {capture=1}
   capture {print}
